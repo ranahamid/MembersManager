@@ -1,0 +1,85 @@
+﻿@model MembersManager.Models.MemberProfileViewModel
+@{
+    ViewBag.Title = Model.FirstName + " " + Model.LastName;
+    Layout = null;
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        @if (ViewBag.Message != null)
+        {
+            <h6 style="color:#808080;">@ViewBag.Message</h6>
+        }
+
+        @{ 
+            if(Model.Id > 0)
+            {
+                     using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="form-group condition-row js-condition">
+
+                            <div class="form-check">
+                                <label class="form-check-label text-danger">
+                                    <input class="form-check-input clearallcheckbox" id="clearallcheckbox" onchange="changeclearall()" checked="@Model.ClearAll.Selected" type="checkbox" name="SelectedClearAll" value="on">@Model.ClearAll.Text
+                                </label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <label class="form-check-label text-danger">
+                                    <input class="form-check-input unsubscribecheckbox" id="unsubscribecheckbox" onchange="changeclearall()" checked="@Model.UnSubscribeAll.Selected" type="checkbox" name="SelectedUnSubscribe" value="on">@Model.UnSubscribeAll.Text
+                                </label>
+                            </div>
+
+                            <hr>
+                            @foreach (var sgment in Model.Segments)
+                            {
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input segmentscheckbox" id="segmentscheckbox" onchange="changesegments()" checked="@sgment.Selected" type="checkbox" name="SelectedSegments" value="@sgment.Value">@sgment.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+                        <button class="btn btn-primary js-condition-update"> <i class="fa fa-save"> </i> &#32; Save and update subscriptions</button>
+                }
+            }
+            else
+            {
+                <h3>You aren't authorized to view this page.</h3>
+                <hr>
+            }
+
+        }
+    </div>
+</div>
+
+<script>
+    function changeclearall()
+    {
+        if ($('#clearallcheckbox').prop("checked") == true || $('#unsubscribecheckbox').prop("checked") == true)
+        {
+            $('.segmentscheckbox').each(function (i, obj) {
+                $(".segmentscheckbox").prop('checked', false);
+            });
+        }
+    }
+
+    function changesegments()
+    {
+        $("#clearallcheckbox").prop('checked', false);
+        $("#unsubscribecheckbox").prop('checked', false);
+        
+    }
+
+</script>
+
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Page level plugin CSS-->
+<link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin.css" rel="stylesheet">

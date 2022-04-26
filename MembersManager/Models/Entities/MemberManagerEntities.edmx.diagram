@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="777eedd338ef4093880caf4ff0fc7b30" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="MemberManagerModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="MemberManagerModel.AspNetRole" Width="1.5" PointX="5.75" PointY="4.125" />
+        <EntityTypeShape EntityType="MemberManagerModel.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="2.75" />
+        <EntityTypeShape EntityType="MemberManagerModel.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="5.5" />
+        <EntityTypeShape EntityType="MemberManagerModel.AspNetUser" Width="1.5" PointX="8" PointY="2.875" />
+        <EntityTypeShape EntityType="MemberManagerModel.BoardMember" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="MemberManagerModel.ConditionSet" Width="1.5" PointX="6" PointY="8" />
+        <EntityTypeShape EntityType="MemberManagerModel.ExternalMember" Width="1.5" PointX="3" PointY="14.5" />
+        <EntityTypeShape EntityType="MemberManagerModel.MemberImportLog" Width="1.5" PointX="8.75" PointY="8.375" />
+        <EntityTypeShape EntityType="MemberManagerModel.PrimaryMember" Width="1.5" PointX="3" PointY="17.875" />
+        <EntityTypeShape EntityType="MemberManagerModel.Recipient" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="MemberManagerModel.RecipientSegment" Width="1.5" PointX="6" PointY="13" />
+        <EntityTypeShape EntityType="MemberManagerModel.Segment" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MemberManagerModel.UnionMember" Width="1.5" PointX="3" PointY="8.25" />
+        <AssociationConnector Association="MemberManagerModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MemberManagerModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MemberManagerModel.FK_BoardMembers_Recipients" />
+        <AssociationConnector Association="MemberManagerModel.FK_ConditionSet_Segments" />
+        <AssociationConnector Association="MemberManagerModel.FK_ExternalMembers_Recipients" />
+        <AssociationConnector Association="MemberManagerModel.FK_PrimaryMembers_Recipients" />
+        <AssociationConnector Association="MemberManagerModel.FK_RecipientSegments_Recipients" />
+        <AssociationConnector Association="MemberManagerModel.FK_UnionMembers_Recipients" />
+        <AssociationConnector Association="MemberManagerModel.FK_RecipientSegments_Segments" />
+        <AssociationConnector Association="MemberManagerModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="MemberManagerModel.MemberLastImportLog" Width="1.5" PointX="11.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MemberManagerModel.ProfileDetail" Width="1.5" PointX="8.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MemberManagerModel.Profile" Width="1.5" PointX="10.375" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

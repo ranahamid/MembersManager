@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "MailUp Control";
+}
+
+<h2>Click below button to remove all recipients </h2>
+
+@using (Html.BeginForm("DeleteMailupSubscriber", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    <input type="submit" class="btn btn-primary" value="DELETE ALL RECIPIENTS" />
+}

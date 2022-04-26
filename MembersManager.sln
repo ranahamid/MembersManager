@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemberManager", "MembersManager\MemberManager.csproj", "{65476FBD-5B47-422C-9E7E-847233F30D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemberManagerService.Job", "MemberManagerService\MemberManagerService.Job.csproj", "{D3C0ED1C-3B6D-4D1D-82D4-9101F2EA0BD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.MailUp", "Services.MailUp\Services.MailUp.csproj", "{08763FAD-EA5D-46E7-96C0-B3FCAB2DA0DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.MMSync", "Services.MMSync\Services.MMSync.csproj", "{4C3C1CE7-76A6-454C-9AE8-693036C07222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.MMSync", "Test.MMSync\Test.MMSync.csproj", "{56731916-6169-400E-B20C-2095FA5217C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.MMDb", "Services.MMDb\Services.MMDb.csproj", "{E566C81B-B3ED-4053-B591-6BE84F06404D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.MMLogger", "Services.MMLogger\Services.MMLogger.csproj", "{0176BBD9-01E6-4C91-B12A-2349E3353529}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65476FBD-5B47-422C-9E7E-847233F30D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65476FBD-5B47-422C-9E7E-847233F30D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65476FBD-5B47-422C-9E7E-847233F30D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65476FBD-5B47-422C-9E7E-847233F30D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C0ED1C-3B6D-4D1D-82D4-9101F2EA0BD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C0ED1C-3B6D-4D1D-82D4-9101F2EA0BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C0ED1C-3B6D-4D1D-82D4-9101F2EA0BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C0ED1C-3B6D-4D1D-82D4-9101F2EA0BD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08763FAD-EA5D-46E7-96C0-B3FCAB2DA0DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08763FAD-EA5D-46E7-96C0-B3FCAB2DA0DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08763FAD-EA5D-46E7-96C0-B3FCAB2DA0DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08763FAD-EA5D-46E7-96C0-B3FCAB2DA0DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3C1CE7-76A6-454C-9AE8-693036C07222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3C1CE7-76A6-454C-9AE8-693036C07222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3C1CE7-76A6-454C-9AE8-693036C07222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3C1CE7-76A6-454C-9AE8-693036C07222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56731916-6169-400E-B20C-2095FA5217C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56731916-6169-400E-B20C-2095FA5217C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56731916-6169-400E-B20C-2095FA5217C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56731916-6169-400E-B20C-2095FA5217C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E566C81B-B3ED-4053-B591-6BE84F06404D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E566C81B-B3ED-4053-B591-6BE84F06404D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E566C81B-B3ED-4053-B591-6BE84F06404D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E566C81B-B3ED-4053-B591-6BE84F06404D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0176BBD9-01E6-4C91-B12A-2349E3353529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0176BBD9-01E6-4C91-B12A-2349E3353529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0176BBD9-01E6-4C91-B12A-2349E3353529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0176BBD9-01E6-4C91-B12A-2349E3353529}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADD56F23-4C34-4C7F-85B0-448676D0751C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,192 @@
+﻿@model IEnumerable<MembersManager.Models.ProfileListViewModel>
+
+@using (Html.BeginForm("DownloadActivities", "Home", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    <input type="text" id="txtId" name="txtId" value="@(ViewContext.RouteData.Values["id"])" style="display:none;">
+    <button value="@(ViewContext.RouteData.Values["id"])" class="btn btn-secondary float-right">Download</button>
+}
+<h4>
+    Found
+    <b><span id="totalrec"></span></b> results.
+</h4>
+
+<div>
+    @*<div class="table-responsive">*@
+        <table class="table table-bordered" id="myTable" style="width:100%;" cellspacing="0">
+            <thead>
+                <tr>
+                    @*<th>Id</th>*@
+                    <th style="width:250px !important;">FullName</th>
+                    <th>Email</th>
+                    <th>MailUpID</th>
+                    <th>OptIn</th>
+                    <th>Deleted</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>ExternalId</th>
+                    <th>Address</th>
+                    <th>Address2</th>
+                    <th>Postcode</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Phone</th>
+                    <th>Mobile</th>
+                    @*<th>CVRnummer</th>
+                    <th>BrugerID</th>
+                    <th>Medlemsstatus</th>
+                    <th>Foreningsnummer</th>
+                    <th>Foedselsaar</th>
+                    <th>HektarDrevet</th>
+                    <th>AntalAndetKvaeg</th>
+                    <th>AntalAmmekoeer</th>
+                    <th>AntaMalkekoeer</th>
+                    <th>AntalSlagtesvin</th>
+                    <th>AntalSoeer</th>
+                    <th>AntalAarssoeer</th>
+                    <th>AntalPelsdyr</th>
+                    <th>AntalHoens</th>
+                    <th>AntalKyllinger</th>
+                    <th>Ecology</th>
+                    <th>Sektion_SSJ</th>
+                    <th>Driftform_planteavl</th>
+                    <th>Driftform_Koed_Koer</th>
+                    <th>Driftform_Mælk</th>
+                    <th>Driftform_Svin</th>
+                    <th>Driftform_Pelsdyr</th>
+                    <th>Driftform_Aeg_Kylling</th>
+                    <th>Driftstoerrelse_Planteavl</th>
+                    <th>Driftstoerrelse_Koed_Koer</th>
+                    <th>Driftfstoerrelse_Mælk</th>
+                    <th>Driftstoerrelse_Svin</th>
+                    <th>Driftstoerrelse_Pelsdyr</th>
+                    <th>Driftstoerrelse_Aeg_Kylling</th>
+                    <th>AntalSlagtekvaeg</th>*@
+                </tr>
+            </thead>
+
+        </table>
+    @*</div>*@
+</div>
+
+@section Scripts{
+
+
+    <script>
+
+        $(document).ready(function () {
+            var url = window.location.pathname;
+            var id = url.substring(url.lastIndexOf('/') + 1);
+
+            $("#myTable").DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "scrollX": true,
+                //"iDisplayLength": 100,
+                "table-layout": "fixed",
+                "ajax": {
+                    "url": "/Profile/LoadActiveProfile/" + id,
+                    "type": "POST",
+                    "datatype": "json",
+                    "dataSrc": function (json) {
+                        $("#totalrec").text(json.recordsTotal);
+                        //$("table.table-bordered.dataTable").addClass("table-responsive");
+                        return json.data;
+                    }
+                },
+
+                //"autoWidth": false,
+                "columns": [
+                    //{ "data": "Id", "name": "Id", "autoWidth": false },
+                    {
+                        "data": "Firstname", "name": "Full Name", "width": "250px", "orderable": false,
+                        "render": function (val, type, obj, meta) {
+                            return "<a href=\"/Member/Details/" + obj.Id + "\">" + obj.Firstname + " " + obj.Lastname + "</a>";
+                        }
+                    },
+                    { "data": "Email", "name": "Email", "width": "250px"},
+                    { "data": "MailUpID", "name": "MailUpID", "width": "250px"},
+                    { "data": "OptIn", "name": "OptIn", "width": "250px"},
+                    { "data": "Deleted", "name": "Deleted", "width": "250px"},
+                    {
+                        "data": "Created", "name": "Created", "autoWidth": true,
+                        "render": function (val, type, obj, meta) {
+                           return DateFormate(val);
+                        }
+                    },
+                    {
+                        "data": "Updated", "name": "Updated", "width": "250px", "autoWidth": true,
+                        "render": function (val, type, obj, meta) {
+                            return DateFormate(val);
+                        }
+                    },
+                    { "data": "ExternalId", "name": " ExternalId", "width": "250px"},
+                    { "data": "Address", "name": "Address", "width": "250px"},
+                    { "data": "Address2", "name": " Address2", "width": "250px"},
+                    { "data": "Postcode", "name": "Postcode", "width": "250px"},
+                    { "data": "City", "name": "City", "width": "250px"},
+                    { "data": "Country", "name": "Country", "width": "250px"},
+                    { "data": "Phone", "name": "Phone", "width": "250px"},
+                    { "data": "Mobile", "name": "Mobile", "width": "250px" }
+                    //,
+                    //{ "data": "CVRnummer", "name": "CVRnummer", "autoWidth": true },
+                    //{ "data": "BrugerID", "name": " BrugerID", "autoWidth": true },
+                    //{ "data": "Medlemsstatus", "name": "Medlemsstatus", "autoWidth": true },
+                    //{ "data": "Foreningsnummer", "name": "Foreningsnummer", "autoWidth": true },
+                    //{ "data": "Foedselsaar", "name": "Foedselsaar", "autoWidth": true },
+                    //{ "data": "HektarDrevet", "name": " HektarDrevet", "autoWidth": true },
+                    //{ "data": "AntalAndetKvaeg", "name": "AntalAndetKvaeg", "autoWidth": true },
+                    //{ "data": "AntalAmmekoeer", "name": " AntalAmmekoeer", "autoWidth": true },
+                    //{ "data": "AntaMalkekoeer", "name": " AntaMalkekoeer", "autoWidth": true },
+                    //{ "data": "AntalSlagtesvin", "name": "AntalSlagtesvin", "autoWidth": true },
+                    //{ "data": "AntalSoeer", "name": " AntalSoeer", "autoWidth": true },
+                    //{ "data": "AntalAarssoeer", "name": " AntalAarssoeer", "autoWidth": true },
+                    //{ "data": "AntalPelsdyr", "name": " AntalPelsdyr", "autoWidth": true },
+                    //{ "data": "AntalHoens", "name": " AntalHoens", "autoWidth": true },
+                    //{ "data": "AntalKyllinger", "name": " AntalKyllinger", "autoWidth": true },
+                    //{ "data": "Ecology", "name": "Ecology", "autoWidth": true },
+                    //{ "data": "Sektion_SSJ", "name": "Sektion_SSJ", "autoWidth": true },
+                    //{ "data": "Driftform_planteavl", "name": "Driftform_planteavl", "autoWidth": true },
+                    //{ "data": "Driftform_Koed_Koer", "name": "Driftform_Koed_Koer", "autoWidth": true },
+                    //{ "data": "Driftform_Mælk", "name": " Driftform_Mælk", "autoWidth": true },
+                    //{ "data": "Driftform_Svin", "name": " Driftform_Svin", "autoWidth": true },
+                    //{ "data": "Driftform_Pelsdyr", "name": "Driftform_Pelsdyr", "autoWidth": true },
+                    //{ "data": "Driftform_Aeg_Kylling", "name": "Driftform_Aeg_Kylling", "autoWidth": true },
+                    //{ "data": "Driftstoerrelse_Planteavl", "name": "Driftstoerrelse_Planteavl", "autoWidth": true },
+                    //{ "data": "Driftstoerrelse_Koed_Koer", "name": "Driftstoerrelse_Koed_Koer", "autoWidth": true },
+                    //{ "data": "Driftfstoerrelse_Mælk", "name": "Driftfstoerrelse_Mælk", "autoWidth": true },
+                    //{ "data": "Driftstoerrelse_Svin", "name": " Driftstoerrelse_Svin", "autoWidth": true },
+                    //{ "data": "Driftstoerrelse_Pelsdyr", "name": "Driftstoerrelse_Pelsdyr", "autoWidth": true },
+                    //{ "data": "Driftstoerrelse_Aeg_Kylling", "name": "Driftstoerrelse_Aeg_Kylling", "autoWidth": true },
+                    //{ "data": "AntalSlagtekvaeg", "name": " AntalSlagtekvaeg", "autoWidth": true },
+
+
+                ]
+            });
+
+            function DateFormate(val)
+            {
+                if (val == null || val == "" || val == undefined)
+                    return "";
+                var d = new Date(parseInt(val.replace('/Date(', '').replace(')/', '')));
+                return (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) + "." + ((d.getMonth() + 1) < 10 ? "0" + d.getMonth() + 1 : d.getMonth() + 1) + "." + d.getFullYear() + "&nbsp;" + (d.getHours() < 10 ? "0" + d.getHours() : d.getHours()) + ":" + (d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes());
+            }
+
+            
+        });
+    </script>
+}
+
+@*<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+        //checkoboolperatorchange();
+        //checkoperatorchange();
+        //checkcolumnchange();
+    });
+</script>*@
+
+
+                

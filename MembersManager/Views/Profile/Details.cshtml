@@ -1,0 +1,99 @@
+﻿@model MembersManager.Models.MemberProfileViewModel
+@{
+    ViewBag.Title = Model.FirstName + " " + Model.LastName;
+}
+
+<!-- Example DataTables Card-->
+<h1>@ViewBag.Title</h1>
+
+@if(ViewBag.Message!=null)
+{
+    <h6 style="color:#808080;">@ViewBag.Message</h6>
+}
+
+@if (Model.Id > 0)
+{
+<div class="card card-condition">
+    <div class="card-header">Subscriptions</div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group condition-row js-condition">
+                <div class="form-check">
+                    <label class="form-check-label text-danger">                     
+                        <input class="form-check-input clearallcheckbox" id="clearallcheckbox" onchange="changeclearall()" checked="@Model.ClearAll.Selected" type="checkbox" name="SelectedClearAll" value="on">@Model.ClearAll.Text
+                    </label>
+                </div>
+
+                <hr>
+                @foreach (var sgment in Model.Segments)
+                {
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input segmentscheckbox" id="segmentscheckbox" onchange="changesegments()" checked="@sgment.Selected" type="checkbox" name="SelectedSegments" value="@sgment.Value">@sgment.Text
+                        </label>
+                    </div>
+                }
+
+            </div>
+            <button class="btn btn-primary js-condition-update"> <i class="fa fa-save"> </i> &#32; Save and update subscriptions</button>
+        }
+
+    </div>
+</div>
+
+
+<hr>
+
+<h4>Info </h4>
+<div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="dataTable">
+            <colgroup>
+                <col class="first-col">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.ProfileInfo)
+                {
+                    if (c.Value != null && c.Value.ToString() != string.Empty && c.Value.ToString().Trim() != "0")
+                    {
+                        <tr>
+                            <th>@c.Key</th>
+                            <th>@c.Value</th>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+else
+{
+    <h2>Profile Not Found</h2>
+}
+
+<script>
+    function changeclearall()
+    {
+        if ($('#clearallcheckbox').prop("checked") == true)
+        {
+            $('.segmentscheckbox').each(function (i, obj) {
+                $(".segmentscheckbox").prop('checked', false);
+            });
+        }
+    }
+
+    function changesegments()
+    {
+        $("#clearallcheckbox").prop('checked', false);
+    }
+
+</script>

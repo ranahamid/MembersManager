@@ -1,0 +1,110 @@
+doctype html
+html(lang='en')
+
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+
+    title Segment name
+
+    include includes/css/core.pug
+
+    // Page level plugin CSS
+    link(href='/vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
+
+    include includes/css/custom.pug
+
+  body#page-top.fixed-nav.sticky-footer.bg-dark
+    include includes/navbar.pug
+    .content-wrapper
+      .container-fluid
+        // Breadcrumbs
+        ol.breadcrumb
+          li.breadcrumb-item
+            a(href='/') Dashboard
+          li.breadcrumb-item.active {{Firstname Lastname}}
+        // Example DataTables Card
+
+        h1 {{Firstname Lastname}}
+			
+
+        .card.card-condition
+          .card-header
+      
+            | Subscriptions
+          .card-body
+           form
+
+            .form-group.condition-row.js-condition
+             div.form-check
+              label.form-check-label.text-danger
+               input.form-check-input(type='checkbox')(onclick='alert("this button needs to update Profile table [OptIn] column as well as OptIn at MailUp API, doesnt matter which segments member is subscribed because this will rule it out on all newsletters")')
+               | Opt-out from all communication
+             hr
+             div.form-check
+              label.form-check-label
+               input.form-check-input(type='checkbox')
+               | {{Segment name}}
+             div.form-check
+              label.form-check-label
+               input.form-check-input(type='checkbox', checked='checked')
+               | {{Segment name}}
+             div.form-check
+              label.form-check-label
+               input.form-check-input(type='checkbox')
+               | {{Segment name}}
+            button.btn.btn-primary.js-condition-update 
+             i.fa.fa-save  
+             |  &#32; Save and update subscriptions
+            
+
+
+        hr
+        
+        h4 Info 
+         
+        div 
+            .table-responsive
+              table#dataTable.table.table-bordered.table-striped
+                colgroup
+                 col.first-col
+                 col
+                thead
+                  tr
+                    th Field
+                    th Value
+                tbody
+                  tr
+                    th {{ProfileTableColumnName}}
+                    td {{ProfileTableColumnValue}}
+                  tr
+                    th {{ProfileTableColumnName}}
+                    td {{ProfileTableColumnValue}}
+                  tr
+                    th {{ProfileTableColumnName}}
+                    td {{ProfileTableColumnValue}}
+                  tr
+                    th {{ProfileTableColumnName}}
+                    td {{ProfileTableColumnValue}}   
+      // /.container-fluid
+      // /.content-wrapper
+
+      include includes/footer.pug
+
+      include includes/scroll-to-top.pug
+
+      include includes/modals/logout.pug
+
+      include includes/js/core.pug
+
+      // Page level plugin JavaScript
+      script(src='/vendor/datatables/jquery.dataTables.js')
+      script(src='/vendor/datatables/dataTables.bootstrap4.js')
+
+      include includes/js/custom.pug
+
+      // Custom scripts for this page
+      script(src='/js/sb-admin-datatables.min.js')

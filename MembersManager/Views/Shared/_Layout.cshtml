@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title - Member Manager</title>
+    <link rel="shortcut icon" href="/images/favicon.png" />
+
+    @Styles.Render("~/Content/css")
+
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+
+        <a class="navbar-brand" href="/">
+
+            L&F Member Management
+        </a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard"><a class="nav-link" href="/"><i class="fa fa-fw fa-dashboard"></i><span class="nav-link-text">Dashboard</span></a></li>
+                @{
+                    if ((ViewBag.Menu as IEnumerable<MembersManager.Models.SegmentViewModels>) != null)
+                    {
+                        foreach (var m in ViewBag.Menu as IEnumerable<MembersManager.Models.SegmentViewModels>)
+                        {
+                            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables"><a class="nav-link" href="/Profile/index/@m.Id"><i class="fa fa-fw fa-table"></i><span class="nav-link-text">@m.Name</span></a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables"><a class="nav-link" href="/Profile/index"><i class="fa fa-fw fa-table"></i><span class="nav-link-text">Segment name</span></a></li>
+                    }
+                }
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item"><a class="nav-link text-center" id="sidenavToggler"><i class="fa fa-fw fa-angle-left"></i></a></li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="New">
+                    <div class="btn-group">
+                        <button class="btn btn-primary dropdown-toggle" id="createnew" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Create</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="createnew">
+                            @if (ViewBag.RecipientId > 0)
+                            {
+                                <a class="dropdown-item" href="/Role/Create?recipientId=@ViewBag.RecipientId&type=board"> <i class="fa fa-fw fa-user"></i>Add Board Member Role</a>
+                                <a class="dropdown-item" href="/Role/Create?recipientId=@ViewBag.RecipientId&type=union"><i class="fa fa-fw fa-user"></i><span class="nav-link-text">Add Union Member Role</span></a>
+                                <a class="dropdown-item" href="/Role/Create?recipientId=@ViewBag.RecipientId&type=external"><i class="fa fa-fw fa-user"></i><span class="nav-link-text">Add External Member Role</span></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/Member/Create"> <i class="fa fa-fw fa-user"></i>New Recipient</a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" href="/Member/Create"> <i class="fa fa-fw fa-user"></i>New Recipient</a>
+                            }
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Segment/Create"> <i class="fa fa-fw fa-table"></i><span class="nav-link-text">New Segment</span></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"></li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                    @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                <li class="breadcrumb-item active">@ViewBag.Title</li>
+            </ol>
+            @RenderBody()
+
+        </div>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center"><small><br></small></div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button--><a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" class="btn btn-primary" value="Logout" />
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/plugins")
+    @Scripts.Render("~/bundles/customJS")
+
+</body>
+</html>

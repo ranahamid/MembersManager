@@ -1,0 +1,63 @@
+doctype html
+html(lang='en')
+
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+
+    title SB Admin - Start Bootstrap Template
+
+    include includes/css/core.pug
+
+    // Page level plugin CSS
+    link(href='vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
+
+    include includes/css/custom.pug
+
+  body#page-top.fixed-nav.sticky-footer.bg-dark
+    include includes/navbar.pug
+    .content-wrapper
+      .container-fluid
+        // Breadcrumbs
+        ol.breadcrumb
+          li.breadcrumb-item
+            a(href='#') Dashboard
+          li.breadcrumb-item.active Create new segment
+        // Example Create Segment
+
+
+
+      .card.card-login.mx-auto.mt-5
+        .card-header
+          | Create new segment
+        .card-body
+          form
+            .form-group
+              label(for='segmentName') Name
+              input#segmentName.form-control(type='text', placeholder='Enter segment name')
+          a.btn.btn-primary.btn-block(href='segment.html') Create
+          
+
+
+      // /.container-fluid
+      // /.content-wrapper
+
+      include includes/footer.pug
+
+      include includes/scroll-to-top.pug
+
+      include includes/modals/logout.pug
+
+      include includes/js/core.pug
+
+      // Page level plugin JavaScript
+      script(src='vendor/datatables/jquery.dataTables.js')
+      script(src='vendor/datatables/dataTables.bootstrap4.js')
+
+      include includes/js/custom.pug
+
+      // Custom scripts for this page
+      script(src='js/sb-admin-datatables.min.js')

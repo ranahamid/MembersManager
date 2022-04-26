@@ -1,0 +1,37 @@
+﻿@model MembersManager.Models.SegmentViewModels
+
+@{
+    ViewBag.Title = "Edit Segment";
+}
+<div class="card card-login mx-auto mt-5">
+    <div class="card-header">Edit segment</div>
+    @using (Html.BeginForm("Edit", "Segment", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @*@Html.HiddenFor(x => x.Id)*@
+        <div class="card-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter segment name" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes)
+                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control", placeholder = "Write here notes", rows = 2 } })
+              </div>
+
+            <div class="form-group">
+                <label for="Visible" class="form-check-label">
+                    @Html.CheckBoxFor(model => model.Visible, new { @class = "form-check-input" })
+                    @Html.DisplayNameFor(model => model.Visible)
+                </label>
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Visible segments are visible in members "manage my subscriptions". This means members are able to un-/subscribe from visible segments.
+                </small>
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Save" />
+        </div>
+    }
+</div>

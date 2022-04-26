@@ -1,0 +1,31 @@
+﻿@model MembersManager.Models.SegmentViewModels
+
+@{
+    ViewBag.Title = "Delete Segment";
+}
+
+
+<div class="card card-login mx-auto mt-5">
+    <div class="card-header">Delete segment</div>
+    @using (Html.BeginForm("Delete", "Segment", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @*@Html.HiddenFor(x => x.Id)*@
+        <div class="card-body">
+        @if(Model != null && Model.Name!=null)
+        {
+            <p class="text-danger lead"><b>Notice:</b> <br />There is no undo. By clicking the button below <b>@Model.Name</b> will be permanently removed.</p>
+            <button type="submit" value="delete" class="btn btn-danger btn-lg btn-lg">Delete</button>
+        }
+        else
+        {
+                <p>Segment deleted successfully</p>
+                <a href="/" value="delete" class="btn btn-primary btn-lg btn-lg">Back</a>
+        }
+
+            
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,112 @@
+﻿@model  MembersManager.Models.ActiveMemberListViewModel
+@{
+    ViewBag.Title = "Home";
+    var activeMember = Model.memberlist.Where(x => x.Type == "Latest Members");
+    var optOutMember = Model.memberlist.Where(x => x.Type == "Opt-Out Members");
+    var deletedMember = Model.memberlist.Where(x => x.Type == "Deleted Members");
+}
+
+<div class="display-2 text-right">@Model.TotalActiveMembers active members </div>
+<div class="small text-right text-muted">
+    <b>@Model.TotalPrimaryMembers</b> PrimaryMembers, 
+    <b>@Model.TotalBoardMembers</b> BoardMembers, 
+    <b>@Model.TotalUnionMembers</b> UnionMembers, 
+    <b>@Model.TotalExternalMembers</b> ExternalMembers.<br />
+    PrimaryMembers Updated:
+    @if (Model.LasteUpdatedDate != null)
+    {
+        @Convert.ToDateTime(Model.LasteUpdatedDate).ToString("dd/MM/yyyy hh:mm")
+    }
+</div>
+
+<hr />
+
+
+<div class="row">
+
+    <div class="col-lg-3">
+
+        <!-- Example Notifications Card-->
+        <div class="card mb-3  text-white bg-primary o-hidden h-100">
+            <div class="card-header">
+                <i class="fa fa-user"></i> Latest members
+            </div>
+
+            <div class="list-group list-group-flush small">
+                @foreach (var item in activeMember.Take(4))
+                {
+                    <a class="list-group-item list-group-item-primary" href="Member/Details/@item.Id">
+                        <div class="media">
+                            <div class="media-body">
+                                <strong>@item.FirstName @item.LastName</strong>
+                                <div class="text-muted smaller">@Convert.ToDateTime(item.Date).ToString("dd/MM/yyyy")</div>
+                            </div>
+                        </div>
+                    </a>
+                }
+                <a class="list-group-item list-group-item-primary" href="/Profile/activeprofile/0">View all activity...</a>
+            </div>
+            <div class="card-footer small">Total number of members @activeMember.Count()</div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+
+        <!-- Example Notifications Card-->
+        <div class="card mb-3  text-white bg-warning o-hidden h-100">
+            <div class="card-header">
+                <i class="fa fa-envelope-o"></i> Latest opt-out members
+            </div>
+
+            <div class="list-group list-group-flush small">
+                @foreach (var item in optOutMember.Take(5))
+                {
+                    <a class="list-group-item list-group-item-warning" href="Member/Details/@item.Id">
+                        <div class="media">
+                            <div class="media-body">
+                                <strong>@item.FirstName @item.LastName</strong>
+                                <div class="text-muted smaller">@Convert.ToDateTime(item.Date).ToString("dd/MM/yyyy")</div>
+                            </div>
+                        </div>
+                    </a>
+                }
+                <a class="list-group-item list-group-item-warning" href="/Profile/activeprofile/1">View all activity...</a>
+            </div>
+            <div class="card-footer small">Total number for opt-out members @optOutMember.Count()</div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+
+        <!-- Example Notifications Card-->
+        <div class="card mb-3  text-white bg-danger o-hidden h-100">
+            <div class="card-header">
+                <i class="fa fa-trash-o"></i> Latest deleted members from DLI
+            </div>
+
+            <div class="list-group list-group-flush small">
+                @foreach (var item in deletedMember.Take(5))
+                {
+                    <a class="list-group-item list-group-item-danger" href="Member/Details/@item.Id">
+                        <div class="media">
+                            <div class="media-body">
+                                <strong>@item.FirstName @item.LastName</strong>
+                                <div class="text-muted smaller">@Convert.ToDateTime(item.Date).ToString("dd/MM/yyyy")</div>
+                            </div>
+                        </div>
+                    </a>
+                }
+                <a class="list-group-item list-group-item-danger" href="/Profile/activeprofile/2">View all activity...</a>
+            </div>
+            <div class="card-footer small">Total number of deleted members @deletedMember.Count()</div>
+        </div>
+    </div>
+</div>
+
+@*<div class="card mb-3" id="Index">
+        <div class="card-header"><i class="fa fa-table"></i> Data Table Example</div>
+        <div class="card-body">
+            <p class="lead">Please choose segments on the left or click button to create new.</p>
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>*@

@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MembersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ProfileID" Type="nvarchar" MaxLength="50" />
+          <Property Name="SegmentID" Type="int" />
+          <Property Name="OptIn" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MemberImportLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="UpdatedMembers" Type="int" />
+          <Property Name="Message" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="MemberLastImportLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Message" Type="text" />
+        </EntityType>
+        <EntityType Name="Profiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="320" />
+          <Property Name="MailUpID" Type="nvarchar" MaxLength="50" />
+          <Property Name="OptIn" Type="bit" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="Created" Type="date" />
+          <Property Name="Updated" Type="date" />
+          <Property Name="ExternalId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="150" />
+          <Property Name="Postcode" Type="int" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" />
+          <Property Name="Mobile" Type="varchar" MaxLength="15" />
+          <Property Name="CVRnummer" Type="varchar" MaxLength="15" />
+          <Property Name="BrugerID" Type="nvarchar" MaxLength="50" />
+          <Property Name="Medlemsstatus" Type="int" />
+          <Property Name="Foreningsnummer" Type="int" />
+          <Property Name="Foedselsaar" Type="nvarchar" MaxLength="50" />
+          <Property Name="HektarDrevet" Type="int" />
+          <Property Name="AntalAndetKvaeg" Type="int" />
+          <Property Name="AntalAmmekoeer" Type="int" />
+          <Property Name="AntaMalkekoeer" Type="int" />
+          <Property Name="AntalSlagtesvin" Type="int" />
+          <Property Name="AntalSoeer" Type="int" />
+          <Property Name="AntalAarssoeer" Type="int" />
+          <Property Name="AntalPelsdyr" Type="int" />
+          <Property Name="AntalHoens" Type="int" />
+          <Property Name="AntalKyllinger" Type="int" />
+          <Property Name="Ecology" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sektion_SSJ" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftform_planteavl" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftform_Koed_Koer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftform_Mælk" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftform_Svin" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftform_Pelsdyr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftform_Aeg_Kylling" Type="nvarchar" MaxLength="50" />
+          <Property Name="Driftstoerrelse_Planteavl" Type="int" />
+          <Property Name="Driftstoerrelse_Koed_Koer" Type="int" />
+          <Property Name="Driftfstoerrelse_Mælk" Type="int" />
+          <Property Name="Driftstoerrelse_Svin" Type="int" />
+          <Property Name="Driftstoerrelse_Pelsdyr" Type="int" />
+          <Property Name="Driftstoerrelse_Aeg_Kylling" Type="int" />
+          <Property Name="AntalSlagtekvaeg" Type="int" />
+        </EntityType>
+        <EntityType Name="Segments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Query" Type="nvarchar" MaxLength="4000" />
+          <Property Name="MailUpGroupID" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="MembersModelStoreContainer">
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberImportLog" EntityType="Self.MemberImportLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberLastImportLog" EntityType="Self.MemberLastImportLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Segments" EntityType="Self.Segments" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MembersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ProfileID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SegmentID" Type="Int32" />
+          <Property Name="OptIn" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Segment" Relationship="Self.FK_Segments_Group" FromRole="Groups" ToRole="Segments" />
+        </EntityType>
+        <EntityType Name="Segment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Query" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="MailUpGroupID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Segments_Group" FromRole="Segments" ToRole="Groups" />
+        </EntityType>
+        <EntityType Name="MemberImportLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedMembers" Type="Int32" />
+          <Property Name="Message" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MemberLastImportLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Segments_Group">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+          <End Role="Segments" Type="Self.Segment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Segments">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MembersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="Segments" EntityType="Self.Segment" />
+          <EntitySet Name="MemberImportLogs" EntityType="Self.MemberImportLog" />
+          <EntitySet Name="MemberLastImportLogs" EntityType="Self.MemberLastImportLog" />
+          <AssociationSet Name="FK_Segments_Group" Association="Self.FK_Segments_Group">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Segments" EntitySet="Segments" />
+          </AssociationSet>
+          <EntitySet Name="Profiles" EntityType="MembersModel.Profile" />
+        </EntityContainer>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="MailUpID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OptIn" Type="Boolean" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="Created" Type="DateTime" Precision="0" />
+          <Property Name="Updated" Type="DateTime" Precision="0" />
+          <Property Name="ExternalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CVRnummer" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="BrugerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Medlemsstatus" Type="Int32" />
+          <Property Name="Foreningsnummer" Type="Int32" />
+          <Property Name="Foedselsaar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HektarDrevet" Type="Int32" />
+          <Property Name="AntalAndetKvaeg" Type="Int32" />
+          <Property Name="AntalAmmekoeer" Type="Int32" />
+          <Property Name="AntaMalkekoeer" Type="Int32" />
+          <Property Name="AntalSlagtesvin" Type="Int32" />
+          <Property Name="AntalSoeer" Type="Int32" />
+          <Property Name="AntalAarssoeer" Type="Int32" />
+          <Property Name="AntalPelsdyr" Type="Int32" />
+          <Property Name="AntalHoens" Type="Int32" />
+          <Property Name="AntalKyllinger" Type="Int32" />
+          <Property Name="Ecology" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sektion_SSJ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftform_planteavl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftform_Koed_Koer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftform_Mælk" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftform_Svin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftform_Pelsdyr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftform_Aeg_Kylling" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Driftstoerrelse_Planteavl" Type="Int32" />
+          <Property Name="Driftstoerrelse_Koed_Koer" Type="Int32" />
+          <Property Name="Driftfstoerrelse_Mælk" Type="Int32" />
+          <Property Name="Driftstoerrelse_Svin" Type="Int32" />
+          <Property Name="Driftstoerrelse_Pelsdyr" Type="Int32" />
+          <Property Name="Driftstoerrelse_Aeg_Kylling" Type="Int32" />
+          <Property Name="AntalSlagtekvaeg" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MembersModelStoreContainer" CdmEntityContainer="MembersEntities">
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="MembersModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+                <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
+                <ScalarProperty Name="OptIn" ColumnName="OptIn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Segments">
+            <EntityTypeMapping TypeName="MembersModel.Segment">
+              <MappingFragment StoreEntitySet="Segments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Query" ColumnName="Query" />
+                <ScalarProperty Name="MailUpGroupID" ColumnName="MailUpGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberImportLogs">
+            <EntityTypeMapping TypeName="MembersModel.MemberImportLog">
+              <MappingFragment StoreEntitySet="MemberImportLog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UpdatedMembers" ColumnName="UpdatedMembers" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberLastImportLogs">
+            <EntityTypeMapping TypeName="MembersModel.MemberLastImportLog">
+              <MappingFragment StoreEntitySet="MemberLastImportLog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profiles">
+            <EntityTypeMapping TypeName="MembersModel.Profile">
+              <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="AntalSlagtekvaeg" ColumnName="AntalSlagtekvaeg" />
+                <ScalarProperty Name="Driftstoerrelse_Aeg_Kylling" ColumnName="Driftstoerrelse_Aeg_Kylling" />
+                <ScalarProperty Name="Driftstoerrelse_Pelsdyr" ColumnName="Driftstoerrelse_Pelsdyr" />
+                <ScalarProperty Name="Driftstoerrelse_Svin" ColumnName="Driftstoerrelse_Svin" />
+                <ScalarProperty Name="Driftfstoerrelse_Mælk" ColumnName="Driftfstoerrelse_Mælk" />
+                <ScalarProperty Name="Driftstoerrelse_Koed_Koer" ColumnName="Driftstoerrelse_Koed_Koer" />
+                <ScalarProperty Name="Driftstoerrelse_Planteavl" ColumnName="Driftstoerrelse_Planteavl" />
+                <ScalarProperty Name="Driftform_Aeg_Kylling" ColumnName="Driftform_Aeg_Kylling" />
+                <ScalarProperty Name="Driftform_Pelsdyr" ColumnName="Driftform_Pelsdyr" />
+                <ScalarProperty Name="Driftform_Svin" ColumnName="Driftform_Svin" />
+                <ScalarProperty Name="Driftform_Mælk" ColumnName="Driftform_Mælk" />
+                <ScalarProperty Name="Driftform_Koed_Koer" ColumnName="Driftform_Koed_Koer" />
+                <ScalarProperty Name="Driftform_planteavl" ColumnName="Driftform_planteavl" />
+                <ScalarProperty Name="Sektion_SSJ" ColumnName="Sektion_SSJ" />
+                <ScalarProperty Name="Ecology" ColumnName="Ecology" />
+                <ScalarProperty Name="AntalKyllinger" ColumnName="AntalKyllinger" />
+                <ScalarProperty Name="AntalHoens" ColumnName="AntalHoens" />
+                <ScalarProperty Name="AntalPelsdyr" ColumnName="AntalPelsdyr" />
+                <ScalarProperty Name="AntalAarssoeer" ColumnName="AntalAarssoeer" />
+                <ScalarProperty Name="AntalSoeer" ColumnName="AntalSoeer" />
+                <ScalarProperty Name="AntalSlagtesvin" ColumnName="AntalSlagtesvin" />
+                <ScalarProperty Name="AntaMalkekoeer" ColumnName="AntaMalkekoeer" />
+                <ScalarProperty Name="AntalAmmekoeer" ColumnName="AntalAmmekoeer" />
+                <ScalarProperty Name="AntalAndetKvaeg" ColumnName="AntalAndetKvaeg" />
+                <ScalarProperty Name="HektarDrevet" ColumnName="HektarDrevet" />
+                <ScalarProperty Name="Foedselsaar" ColumnName="Foedselsaar" />
+                <ScalarProperty Name="Foreningsnummer" ColumnName="Foreningsnummer" />
+                <ScalarProperty Name="Medlemsstatus" ColumnName="Medlemsstatus" />
+                <ScalarProperty Name="BrugerID" ColumnName="BrugerID" />
+                <ScalarProperty Name="CVRnummer" ColumnName="CVRnummer" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="ExternalId" ColumnName="ExternalId" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="OptIn" ColumnName="OptIn" />
+                <ScalarProperty Name="MailUpID" ColumnName="MailUpID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

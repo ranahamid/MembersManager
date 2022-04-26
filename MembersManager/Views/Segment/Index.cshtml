@@ -1,0 +1,352 @@
+﻿@model MembersManager.Models.ProfileViewModel
+@{
+    ViewBag.Title = "My Profile";
+}
+<div class="btn-group float-right">
+    <a class="btn btn-secondary" href="@Url.Action("Edit")/@Model.SegmentId" title="edit"><i class="fa fa-fw fa-pencil"></i></a>
+    <a class="btn btn-secondary" href="@Url.Action("Delete")/@Model.SegmentId" title="delete"><i class="fa fa-trash-o"> </i></a>
+</div>
+
+<h1>@Model.SegmentName</h1>
+
+<div class="card card-condition">
+    <div class="card-header">
+        <button class="btn btn-secondary btn-sm pull-right" onclick="addcondition()"> <i class="fa fa-filter"> </i>Add condition</button>
+        Conditions
+    </div>
+
+    @{
+        List<SelectListItem> GetSelectedList(string selectText, List<SelectListItem> DropSelectList)
+
+
+            {
+                List<SelectListItem> dropDown = new List<SelectListItem>();
+                foreach (var drop in DropSelectList)
+                {
+                    dropDown.Add(new SelectListItem()
+                    {
+                        Value = drop.Value,
+                        Text = drop.Text,
+                        Selected = (drop.Value.ToLower() == selectText.ToString().ToLower()) ? true : false
+                    });
+                }
+                return dropDown;
+            }
+
+
+
+        string GetOperator(string stOpt)
+        {
+            List<SelectListItem> filter = Model.AllFilterOperatorSelectList;
+            foreach (var item in filter)
+            {
+                if (item.Value == stOpt)
+                {
+                    return item.Text;
+                }
+            }
+
+            return string.Empty;
+        }
+    }
+
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.SegmentId)
+
+            <div class="multi-field-wrapper">
+                <div class="multi-fields">
+                    @{
+                        if (Model.conditionSet.Count > 0)
+                        {
+                            foreach (var item in Model.conditionSet)
+                            {
+                                string SearchTerm;
+                                SearchTerm = item.SearchTerm;
+
+                                string SelectColumn;
+                                SelectColumn = item.SelectColumn;
+
+                                string SelectFilter;
+                                SelectFilter = item.SelectFilter;
+
+                                List<SelectListItem> column = GetSelectedList(SelectColumn, Model.AllColumnSelectList);
+
+                                List<SelectListItem> filter = GetSelectedList(SelectFilter, Model.AllFilterSelectList);
+
+                                <div class="multi-field">
+                                    <button class="btn btn-info btn-sm float-right remove-field" type="button"> <i class="fa fa-close"> </i></button>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.DropDownListFor(m => SelectColumn, column, "---Choose Column---", new { @id = "columnid", @class = "form-control form-control-sm", @onchange = "checkcolumnchange()" })
+                                            </div>
+
+                                            <div class="col-md-4" id="allfilter">
+                                                @Html.DropDownListFor(m => SelectFilter, filter, "---Choose Operator---", new { @id = "operatorid", @class = "form-control form-control-sm", @onchange = "checkoperatorchange()" })
+                                            </div>
+
+                                            <div class="col-md-4" id="searchtext">
+
+                                                @Html.TextBoxFor(m => SearchTerm, new { @class = "form-control form-control-sm", @placeholder = "use comma(,) to seperate the values" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="multi-field">
+                                <button class="btn btn-info btn-sm float-right remove-field" type="button"> <i class="fa fa-close"> </i></button>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.DropDownListFor(m => Model.SelectColumn, Model.AllColumnSelectList, "---Choose Column---", new { @id = "columnid", @class = "form-control form-control-sm", @onchange = "checkcolumnchange()" })
+                                        </div>
+
+                                        <div class="col-md-4" id="allfilter">
+                                            @Html.DropDownListFor(m => Model.SelectFilter, Model.AllFilterSelectList, "---Choose Operator---", new { @id = "operatorid", @class = "form-control form-control-sm", @onchange = "checkoperatorchange()" })
+                                        </div>
+
+                                        <div class="col-md-4" id="searchtext">
+                                            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control form-control-sm" })
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit"> <i class="fa fa-save"> </i> Save and update</button>
+                        }
+    </div>
+</div>
+<br />
+@foreach (var item in Model.conditionSet)
+{
+    string opt = GetOperator(@item.SelectFilter);
+    <div class="text-info">
+        @item.SelectColumn <i>@opt</i> @item.SearchTerm
+    </div>
+
+}
+
+
+<hr>
+@using (Html.BeginForm("DownloadSegmentProfiles", "Segment", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    <input type="text" id="txtId" name="txtId" value="@Model.SegmentId" style="display:none;">
+    <button value="@Model.SegmentId" class="btn btn-secondary float-right">Download</button>
+}
+
+
+<h4>
+    Found
+    <b><span id="totalrec"></span></b> results.
+</h4>
+<div>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="myTable" style="width:100%;" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th style="width:250px !important;">Full Name</th>
+                    <th>Email</th>
+                    <th>MailUpID</th>
+                    <th>OptIn</th>
+                    <th>Deleted</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>ExternalId</th>
+                    <th>Address</th>
+                    <th>Address2</th>
+                    <th>Postcode</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Phone</th>
+                    <th>Mobile</th>
+                    <th>CVRnummer</th>
+                    <th>BrugerID</th>
+                    <th>Medlemsstatus</th>
+                    <th>Foreningsnummer</th>
+                    <th>Foedselsaar</th>
+                    <th>HektarDrevet</th>
+                    <th>AntalAndetKvaeg</th>
+                    <th>AntalAmmekoeer</th>
+                    <th>AntaMalkekoeer</th>
+                    <th>AntalSlagtesvin</th>
+                    <th>AntalSoeer</th>
+                    <th>AntalAarssoeer</th>
+                    <th>AntalPelsdyr</th>
+                    <th>AntalHoens</th>
+                    <th>AntalKyllinger</th>
+                    <th>Ecology</th>
+                    <th>Sektion_SSJ</th>
+                    <th>Driftform_planteavl</th>
+                    <th>Driftform_Koed_Koer</th>
+                    <th>Driftform_Mælk</th>
+                    <th>Driftform_Svin</th>
+                    <th>Driftform_Pelsdyr</th>
+                    <th>Driftform_Aeg_Kylling</th>
+                    <th>Driftstoerrelse_Planteavl</th>
+                    <th>Driftstoerrelse_Koed_Koer</th>
+                    <th>Driftfstoerrelse_Mælk</th>
+                    <th>Driftstoerrelse_Svin</th>
+                    <th>Driftstoerrelse_Pelsdyr</th>
+                    <th>Driftstoerrelse_Aeg_Kylling</th>
+                    <th>AntalSlagtekvaeg</th>
+
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+</div>
+
+<script>
+
+    function addcondition() {
+        var $wrapper = $('.multi-fields');
+        $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+    }
+
+
+
+    $('.multi-field-wrapper').each(function () {
+        var $wrapper = $('.multi-fields', this);
+
+        //$(".add-field", $(this)).click(function (e)
+        //{
+        //    $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+        //});
+
+        $('.multi-field .remove-field', $wrapper).click(function () {
+            if ($('.multi-field', $wrapper).length > 1)
+                $(this).parent('.multi-field').remove();
+        });
+
+    });
+</script>
+
+
+@section Scripts{
+
+
+    <script>
+
+        $(document).ready(function () {
+            var url = window.location.pathname;
+            var id = url.substring(url.lastIndexOf('/') + 1);
+
+            $("#myTable").DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "iDisplayLength": 100,
+                "ajax": {
+                    "url": "/Segment/LoadData/" + id,
+                    "type": "POST",
+                    "datatype": "json",
+                    "dataSrc": function (json) {
+                        $("#totalrec").text(json.recordsTotal);
+                        return json.data;
+                    }
+                },
+
+                "autoWidth": false,
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": false },
+                    {
+                        "data": "Firstname", "name": "Full Name", "width": "300", "orderable": false,
+                        "render": function (val, type, obj, meta) {
+                            return "<a href=\"/Profile/Member/" + obj.Id + "\">" + obj.Firstname + " " + obj.Lastname + "</a>";
+                        }
+                    },
+                    { "data": "Email", "name": "Email", "autoWidth": true },
+                    { "data": "MailUpID", "name": "MailUpID", "autoWidth": true },
+                    { "data": "OptIn", "name": "OptIn", "autoWidth": true },
+                    { "data": "Deleted", "name": "Deleted", "autoWidth": true },
+                    {
+                        "data": "Created", "name": "Created", "autoWidth": true,
+                        "render": function (val, type, obj, meta) {
+                            return DateFormate(val);
+                        }
+                    },
+                    {
+                        "data": "Updated", "name": "Updated", "autoWidth": true,
+                        "render": function (val, type, obj, meta) {
+                            return DateFormate(val);
+                        }
+                    },
+                    { "data": "ExternalId", "name": " ExternalId", "autoWidth": true },
+                    { "data": "Address", "name": "Address", "autoWidth": true },
+                    { "data": "Address2", "name": " Address2", "autoWidth": true },
+                    { "data": "Postcode", "name": "Postcode", "autoWidth": true },
+                    { "data": "City", "name": "City", "autoWidth": true },
+                    { "data": "Country", "name": "Country", "autoWidth": true },
+                    { "data": "Phone", "name": "Phone", "autoWidth": true },
+                    { "data": "Mobile", "name": "Mobile", "autoWidth": true },
+                    { "data": "CVRnummer", "name": "CVRnummer", "autoWidth": true },
+                    { "data": "BrugerID", "name": " BrugerID", "autoWidth": true },
+                    { "data": "Medlemsstatus", "name": "Medlemsstatus", "autoWidth": true },
+                    { "data": "Foreningsnummer", "name": "Foreningsnummer", "autoWidth": true },
+                    { "data": "Foedselsaar", "name": "Foedselsaar", "autoWidth": true },
+                    { "data": "HektarDrevet", "name": " HektarDrevet", "autoWidth": true },
+                    { "data": "AntalAndetKvaeg", "name": "AntalAndetKvaeg", "autoWidth": true },
+                    { "data": "AntalAmmekoeer", "name": " AntalAmmekoeer", "autoWidth": true },
+                    { "data": "AntaMalkekoeer", "name": " AntaMalkekoeer", "autoWidth": true },
+                    { "data": "AntalSlagtesvin", "name": "AntalSlagtesvin", "autoWidth": true },
+                    { "data": "AntalSoeer", "name": " AntalSoeer", "autoWidth": true },
+                    { "data": "AntalAarssoeer", "name": " AntalAarssoeer", "autoWidth": true },
+                    { "data": "AntalPelsdyr", "name": " AntalPelsdyr", "autoWidth": true },
+                    { "data": "AntalHoens", "name": " AntalHoens", "autoWidth": true },
+                    { "data": "AntalKyllinger", "name": " AntalKyllinger", "autoWidth": true },
+                    { "data": "Ecology", "name": "Ecology", "autoWidth": true },
+                    { "data": "Sektion_SSJ", "name": "Sektion_SSJ", "autoWidth": true },
+                    { "data": "Driftform_planteavl", "name": "Driftform_planteavl", "autoWidth": true },
+                    { "data": "Driftform_Koed_Koer", "name": "Driftform_Koed_Koer", "autoWidth": true },
+                    { "data": "Driftform_Mælk", "name": " Driftform_Mælk", "autoWidth": true },
+                    { "data": "Driftform_Svin", "name": " Driftform_Svin", "autoWidth": true },
+                    { "data": "Driftform_Pelsdyr", "name": "Driftform_Pelsdyr", "autoWidth": true },
+                    { "data": "Driftform_Aeg_Kylling", "name": "Driftform_Aeg_Kylling", "autoWidth": true },
+                    { "data": "Driftstoerrelse_Planteavl", "name": "Driftstoerrelse_Planteavl", "autoWidth": true },
+                    { "data": "Driftstoerrelse_Koed_Koer", "name": "Driftstoerrelse_Koed_Koer", "autoWidth": true },
+                    { "data": "Driftfstoerrelse_Mælk", "name": "Driftfstoerrelse_Mælk", "autoWidth": true },
+                    { "data": "Driftstoerrelse_Svin", "name": " Driftstoerrelse_Svin", "autoWidth": true },
+                    { "data": "Driftstoerrelse_Pelsdyr", "name": "Driftstoerrelse_Pelsdyr", "autoWidth": true },
+                    { "data": "Driftstoerrelse_Aeg_Kylling", "name": "Driftstoerrelse_Aeg_Kylling", "autoWidth": true },
+                    { "data": "AntalSlagtekvaeg", "name": " AntalSlagtekvaeg", "autoWidth": true },
+
+
+                ]
+            });
+
+            function DateFormate(val) {
+                if (val == null || val == "" || val == undefined)
+                    return "";
+                var d = new Date(parseInt(val.replace('/Date(', '').replace(')/', '')));
+                return (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) + "." + ((d.getMonth() + 1) < 10 ? "0" + d.getMonth() + 1 : d.getMonth() + 1) + "." + d.getFullYear() + "&nbsp;" + (d.getHours() < 10 ? "0" + d.getHours() : d.getHours()) + ":" + (d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes());
+            }
+        });
+    </script>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+        //checkoboolperatorchange();
+        //checkoperatorchange();
+        //checkcolumnchange();
+    });
+</script>
